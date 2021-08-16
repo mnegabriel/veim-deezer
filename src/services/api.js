@@ -2,7 +2,11 @@ import axios from 'axios'
 
 export class Api {
     constructor(paginationNumber = 10) {
-        const baseURL = 'https://cors-anywhere.herokuapp.com/https://api.deezer.com'
+        const corsProxy = process.env.REACT_APP_PROXY_URL || 'https://cors-anywhere.herokuapp.com/'
+
+        const apiUrl = 'https://api.deezer.com'
+        const baseURL = corsProxy + apiUrl
+
         this._api = axios.create({
             baseURL
         })
