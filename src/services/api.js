@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export class Api {
     constructor(paginationNumber = 10) {
-        const corsProxy = process.env.REACT_APP_PROXY_URL || 'https://cors-anywhere.herokuapp.com/'
+        const corsProxy = import.meta.env.VITE_PROXY_URL || 'https://cors-anywhere.herokuapp.com/'
 
         const apiUrl = 'https://api.deezer.com'
         const baseURL = corsProxy + apiUrl
@@ -34,7 +34,7 @@ export class Api {
             }
         })
 
-        return data
+        return data.data
     }
 }
 
