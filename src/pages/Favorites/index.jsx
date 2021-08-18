@@ -1,25 +1,26 @@
 import React from "react"
+import styled from 'styled-components'
 
 import { useFavorite } from '../../hooks/useFavorite'
 
+import { TrackList } from "../../components/TrackList"
+
+const Wrapper = styled.div`
+    height: 78.7%;
+    width: 100%;
+    overflow-y: auto;    
+`
+
 const Favorites = () => {
 
-    const { favorites, isFavorited, handleFaveClick } = useFavorite()
-
-    const favoritesList = favorites.map(fave => (
-        <li key={fave.id}>
-            <p>{fave.title_short}</p>
-            <p>{fave.artist.name}</p>
-            <button onClick={() => handleFaveClick(fave)}>
-                {isFavorited(fave) ? 'remove of Faves' : 'add to Faves'}
-            </button>
-        </li>
-    ))
+    const { favorites } = useFavorite()
 
     return (
         <>
             <h1>Favoritos</h1>
-            <ul>{favoritesList}</ul>
+            <Wrapper>
+                <TrackList tracks={favorites} />
+            </Wrapper>
         </>
     )
 }

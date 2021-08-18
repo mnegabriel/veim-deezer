@@ -1,10 +1,18 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 import { fetchDeezerSearchResults, selectLoadingState, selectSearchLock, selectSearchResultsList, selectSearchTerm } from '../../features/deezer/deezerSlice'
 
 import { InfiniteScrollHandler } from '../InfiniteScrollHandler'
 import { TheSearchInput } from '../TheSearchInput'
+import { TrackList } from '../TrackList'
+
+const Wrapper = styled.div`
+    height: 65.1%;
+    width: 100%;
+    overflow-y: auto;    
+`
 
 const TheSearch = () => {
     const dispatch = useDispatch()
@@ -13,11 +21,6 @@ const TheSearch = () => {
     const searchLock = useSelector(selectSearchLock)
 
     const searchResults = useSelector(selectSearchResultsList)
-    const searchResultsList = searchResults.map(track =>
-        <li key={track.id}>
-            <p>{track.title_short}</p>
-        </li>
-    )
 
     const loading = useSelector(selectLoadingState)
 
@@ -27,12 +30,14 @@ const TheSearch = () => {
     return (
         <>
             <TheSearchInput />
-            <ul>{searchResultsList}</ul>
-            {
-                searchTerm && !searchLock
-                    ? <InfiniteScrollHandler observerFn={() => addMoreSearchResults()} />
-                    : <></>
-            }
+            <Wrapper>
+                <TrackList tracks={searchResults} />
+                {
+                    searchTerm && !searchLock
+                        ? <InfiniteScrollHandler observerFn={() => addMoreSearchResults()} />
+                        : <></>
+                }
+            </Wrapper>
         </>
     )
 }

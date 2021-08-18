@@ -1,8 +1,17 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 import { fetchDeezerList, selectChartList, selectLoadingState } from '../../features/deezer/deezerSlice'
 import { InfiniteScrollHandler } from '../InfiniteScrollHandler'
+import { TrackList } from '../TrackList'
+
+
+const Wrapper = styled.div`
+    height: 70.5%;
+    width: 100%;
+    overflow-y: auto;    
+`
 
 const TheTracks = () => {
 
@@ -13,17 +22,11 @@ const TheTracks = () => {
 
     const addMoreTracks = () => !loading && dispatch(fetchDeezerList())
 
-    const trackList = tracks.map(track =>
-        <li key={track.id}>
-            <p>{track.title_short}</p>
-        </li>
-    )
-
     return (
-        <>
-            <ul>{trackList}</ul>
+        <Wrapper>
+            <TrackList tracks={tracks} />
             <InfiniteScrollHandler observerFn={() => addMoreTracks()} />
-        </>
+        </Wrapper>
     )
 }
 
